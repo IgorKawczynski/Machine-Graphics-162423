@@ -1,5 +1,5 @@
-Image conversions, using Python3 + NumPy + MatplotLib
-Conversed image is popular 'Lena', description there : https://en.wikipedia.org/wiki/Lenna
+<br> Image conversions, using Python3 + NumPy + MatplotLib
+<br> Conversed image is popular 'Lena', description there : https://en.wikipedia.org/wiki/Lenna
 
 <br> Original Image : <br>
 ![lena](https://user-images.githubusercontent.com/73948605/200052563-c1838844-f95b-401b-9e01-e5df61d42249.jpg)
