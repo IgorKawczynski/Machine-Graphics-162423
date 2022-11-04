@@ -6,8 +6,10 @@ from matplotlib.image import imsave
 import numpy as np
 from enum import Enum
 
-# # img_arr = imread('C://Users/local/Desktop/lena.jpg')
-# img_arr = imread('C:/Users/kompp3/Desktop/lena.jpg')
+PATH = 'C://Users/kompp3/Desktop/lena.jpg'
+
+# # img_arr = imread(PATH)
+# img_arr = imread(PATH)
 #
 # print(type(img_arr))
 # print(img_arr)
@@ -55,6 +57,7 @@ class ColorModel(Enum):
     hsi = 2
     hsl = 3
     gray = 4  # obraz 2d
+    sepia = 5  # 3d
 
 
 class BaseImage:
@@ -341,13 +344,13 @@ class BaseImage:
 
 
 # # # --------------------- HSV ----------------------
-image1 = BaseImage('C:/Users/kompp3/Desktop/lena.jpg', ColorModel.rgb)
+image1 = BaseImage(PATH, ColorModel.rgb)
 image1.showHsvConversions()
 
 # # # --------------------- HSI ----------------------
-image2 = BaseImage('C:/Users/kompp3/Desktop/lena.jpg', ColorModel.rgb)
+image2 = BaseImage(PATH, ColorModel.rgb)
 image2.showHsiConversions()
 
 # # # --------------------- HSL ----------------------
-image3 = BaseImage('C:/Users/kompp3/Desktop/lena.jpg', ColorModel.rgb)
+image3 = BaseImage(PATH, ColorModel.rgb)
 image3.showHslConversions()
