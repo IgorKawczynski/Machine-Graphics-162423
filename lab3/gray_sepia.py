@@ -90,11 +90,11 @@ class GrayScaleTransform(BaseImage):
         matplotlib.pyplot.show()
 
 
-# # # --------------------- GRAY ----------------------
+# # --------------------- GRAY ----------------------
 image1 = GrayScaleTransform('C:/Users/kompp3/Desktop/lena.jpg', ColorModel.rgb)
 image1.showGrayConversions()
 
-# # # --------------------- SEPIA ----------------------
+# # --------------------- SEPIA ----------------------
 
 alpha1 = 1.1
 alpha2 = 1.5
