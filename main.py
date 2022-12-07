@@ -160,3 +160,9 @@ lenaGrayAlign.alignImage()
 imshow(lenaGrayAlign.pixels, cmap='gray')
 matplotlib.pyplot.show()
 
+# Porównanie zwykłego obrazu w skali szarości i po wyrównaniu
+notLenaGray = GrayScaleTransform(PATH2, colorModel=ColorModel.rgb)
+notLenaGray.fromRgbToGray()
+image = ImageAligning(notLenaGray)
+image.compareStandardToAligned()
+

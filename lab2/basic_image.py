@@ -7,6 +7,7 @@ import numpy as np
 from enum import Enum
 
 PATH = 'C://Users/kompp3/Desktop/lena.jpg'
+PATH2 = 'C://Users/kompp3/Desktop/nieLena.jpg'
 
 # ------------------------------------------------------------------------------------------------------------
 
