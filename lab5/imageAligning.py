@@ -3,6 +3,7 @@ import numpy as np
 from matplotlib.pyplot import imshow
 
 from lab2.basic_image import BaseImage, ColorModel
+from lab3.gray_sepia import GrayScaleTransform
 
 
 class ImageAligning(BaseImage):
@@ -20,8 +21,8 @@ class ImageAligning(BaseImage):
     def alignImage(self, tailElimination: bool = True) -> 'BaseImage':
         if tailElimination is False:
             if self.pixels.ndim == 2:
-                self.align(self.pixels)
-                return BaseImage(self.pixels, ColorModel.gray)
+                grayLayer = self.align(self.pixels)
+                return BaseImage(grayLayer, self.colorModel)
             else:
                 firstLayer, secondLayer, thirdLayer = self.getLayers()
                 firstLayer = self.align(firstLayer)

@@ -56,7 +56,6 @@ class Histogram:
             matplotlib.pyplot.plot(binEdges[0: -1], histogram, color=color, label=color + " layer")
             matplotlib.pyplot.legend()
         matplotlib.pyplot.show()
-        print(self.values)
 
     def plotGrayScale(self) -> None:
         matplotlib.pyplot.title("Gray Scale Histogram")
@@ -67,26 +66,12 @@ class Histogram:
         histogramG, binEdgesG = np.histogram(self.values, bins=256, range=(0, 256))
         matplotlib.pyplot.plot(binEdgesG[0: -1], histogramG, color="gray")
         matplotlib.pyplot.show()
-        print(self.values)
 
     """
     metoda zwracajaca histogram skumulowany na podstawie stanu wewnetrznego obiektu
     """
-    # TYLKO DLA OBRAZU W SKALI SZAROSCI !
-    def alignImage(self) -> 'Histogram':
-
-        self.values = np.where(self.values >= 0.0,
-                               (self.values - np.min(self.values)) * (255 / (np.max(self.values) - np.min(self.values))),
-                             0.0)
-
-        self.values = np.where(self.values > 255, 255, self.values)
-
-        return self
-
     def to_cumulated(self) -> 'Histogram':
-        """
-        metoda zwracajaca histogram skumulowany na podstawie stanu wewnetrznego obiektu
-        """
+
         pass
 
 
@@ -151,5 +136,3 @@ class ImageComparison(BaseImage):
 # 255 x x    <--- dla x'ow analogicznie robimy jak dla 240...
 # x x x
 # x x x
-
-# Mozna tez to zrobic dla obrazu kolorowego, wtedy robimy to powyzej dla kazdej z 3 warstw...

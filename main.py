@@ -140,45 +140,10 @@ from matplotlib.pyplot import imshow
 # matplotlib.pyplot.show()
 
 # # # --------------------------------------------- Image Aligning----------------------------------------------
-# # HISTOGRAM
-# lenaGray = GrayScaleTransform(PATH, colorModel=ColorModel.rgb)
-# lenaGray.fromRgbToGray()
-# lenaGrayArray = lenaGray.getArray()
-# imshow(lenaGray.pixels, cmap='gray')
-# matplotlib.pyplot.show()
-# lenaGrayHistogram = Histogram(lenaGrayArray)
-# lenaGrayHistogram.plot()
-#
-# # ALIGNED HISTOGRAM (wyrównany histogram)
-# lenaGrayAlignedHistogram = Histogram(lenaGrayArray)
-# lenaGrayAlignedHistogram.alignImage()
-# lenaGrayAlignedHistogram.plot()
-#
-# # ALIGNED IMAGE (wyrównany obraz - lepszy kontrast - drobne różnice)
-# lenaGrayAlign = ImageAligning(lenaGray)
-# lenaGrayAlign.alignImage()
-# imshow(lenaGrayAlign.pixels, cmap='gray')
-# matplotlib.pyplot.show()
-#
-# # Porównanie zwykłego obrazu w skali szarości i po wyrównaniu
-# notLenaGray = GrayScaleTransform(PATH2, colorModel=ColorModel.rgb)
-# notLenaGray.fromRgbToGray()
-# image = ImageAligning(notLenaGray)
-# image.compareStandardToAligned()
-#
-# print("ROZNICA MIEDZY ZWYKLYM A WYROWNANYM :")
-# print(image.pixels - lenaGray.pixels)
-
-
 # ALIGN DLA RGB
-lena = BaseImage(PATH, colorModel=ColorModel.rgb)
+lena = BaseImage(PATH2, colorModel=ColorModel.rgb)
 imshow(lena.pixels)
 matplotlib.pyplot.show()
-lenaHistogram = Histogram(lena.pixels)
-lenaHistogram.plotRGBInOne()
-
-lenaAlignedHistogram = Histogram(lena.pixels).alignImage()
-lenaAlignedHistogram.plotRGBInOne()
 
 lenaAlign = ImageAligning(lena).alignImage(tailElimination=False)
 imshow(lenaAlign.pixels)
@@ -186,6 +151,33 @@ matplotlib.pyplot.show()
 
 image = ImageAligning(lena)
 image.compareStandardToAligned(tailElimination=False)
+
+lenaHistogram = Histogram(lena.pixels)
+lenaHistogram.plot()
+
+lenaAlignedHistogram = Histogram(ImageAligning(lena).alignImage(tailElimination=False).pixels)
+lenaAlignedHistogram.plot()
+
+# # ALIGN DLA Skali szarości - do poprawy
+# lenaGray = GrayScaleTransform(PATH, colorModel=ColorModel.rgb)
+# lenaGray.fromRgbToGray()
+# imshow(lenaGray.pixels, cmap='gray')
+# matplotlib.pyplot.show()
+#
+# lenaGrayAlign = ImageAligning(lenaGray).alignImage(tailElimination=False)
+# imshow(lenaGrayAlign.pixels, cmap='gray')
+# matplotlib.pyplot.show()
+#
+# imageGray = ImageAligning(lenaGray)
+# imageGray.compareStandardToAligned(tailElimination=False)
+#
+# lenaGrayHistogram = Histogram(lenaGray.pixels)
+# lenaGrayHistogram.plot()
+#
+# lenaAlignedHistogram = Histogram(lenaGrayAlign.pixels)
+# lenaAlignedHistogram.plot()
+
+
 
 
 
