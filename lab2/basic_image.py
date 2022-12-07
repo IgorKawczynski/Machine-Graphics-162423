@@ -8,46 +8,6 @@ from enum import Enum
 
 PATH = 'C://Users/kompp3/Desktop/lena.jpg'
 
-# # img_arr = imread(PATH)
-# img_arr = imread(PATH)
-#
-# print(type(img_arr))
-# print(img_arr)
-#
-# imshow(img_arr)
-# matplotlib.pyplot.show()
-#
-# imsave('image.jpg', img_arr)
-#
-# # ----------------------------------------------------------
-# # mozna rozbic obraz na wszystkie warstwy R G B
-# r_layer, g_layer, b_layer = np.squeeze(np.dsplit(img_arr, img_arr.shape[-1]))
-# img_stacked_layers = np.dstack((r_layer, g_layer, b_layer))
-# imshow(img_stacked_layers)
-#
-# matplotlib.pyplot.show()
-#
-# f, ax_arr = matplotlib.pyplot.subplots(1, 3)
-# ax_arr[0].imshow(r_layer, cmap='gray')
-# ax_arr[1].imshow(g_layer, cmap='gray')
-# ax_arr[2].imshow(b_layer, cmap='gray')
-#
-# matplotlib.pyplot.show()
-#
-# # Osobne warstwy można z powodzeniem złożyć do postaci obrazu kolorowego.
-# # Należy jednak pamiętać o kolejności warstw: RGB:
-#
-# img_stacked_layers = np.dstack((r_layer, g_layer, b_layer))
-# imshow(img_stacked_layers)
-#
-# matplotlib.pyplot.show()
-#
-#
-# uzywaj matplotliba i innych bib
-# przy konwersji uzywaj RGB, wiec z HSI do HSL,
-# to najpierw HSI -> RGB a pozniej z RGB -> HSL
-
-
 # ------------------------------------------------------------------------------------------------------------
 
 
@@ -341,16 +301,3 @@ class BaseImage:
             return self.fromHslToRgb()
         else:
             raise TypeError("This method is only eligible to HSV, HSI, HSL schema colors!")
-
-
-# # # # --------------------- HSV ----------------------
-# image1 = BaseImage(PATH, ColorModel.rgb)
-# image1.showHsvConversions()
-#
-# # # # --------------------- HSI ----------------------
-# image2 = BaseImage(PATH, ColorModel.rgb)
-# image2.showHsiConversions()
-#
-# # # # --------------------- HSL ----------------------
-# image3 = BaseImage(PATH, ColorModel.rgb)
-# image3.showHslConversions()

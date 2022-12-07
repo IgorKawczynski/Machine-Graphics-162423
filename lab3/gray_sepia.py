@@ -91,11 +91,7 @@ class GrayScaleTransform(BaseImage):
         matplotlib.pyplot.show()
 
 
-# # # # --------------------- GRAY ----------------------
-# image1 = GrayScaleTransform('C:/Users/kompp3/Desktop/lena.jpg', ColorModel.rgb)
-# image1.showGrayConversions()
-# #
-# # # # --------------------- SEPIA ----------------------
+# --------------------------- ALL CONVERSIONS -----------------------------
 
 alpha1 = 1.1
 alpha2 = 1.5
@@ -109,26 +105,6 @@ w1 = 20
 w2 = 30
 w3 = 40
 
-# image3 = GrayScaleTransform(PATH, ColorModel.rgb)
-# image3.showSepiaConversions((alpha1, beta1))
-#
-# image4 = GrayScaleTransform(PATH, ColorModel.rgb)
-# image4.showSepiaConversions((alpha2, beta2))
-#
-# image5 = GrayScaleTransform(PATH, ColorModel.rgb)
-# image5.showSepiaConversions((alpha3, beta3))
-#
-# image5 = GrayScaleTransform(PATH, ColorModel.rgb)
-# image5.showSepiaConversions(w=w1)
-#
-# image5 = GrayScaleTransform(PATH, ColorModel.rgb)
-# image5.showSepiaConversions(w=w2)
-#
-# image5 = GrayScaleTransform(PATH, ColorModel.rgb)
-# image5.showSepiaConversions(w=w3)
-
-
-# --------------------------- ALL CONVERSIONS -----------------------------
 
 def showAllSepiaConversions(path: str = None):
 
@@ -166,5 +142,3 @@ def showAllSepiaConversions(path: str = None):
     figure.set_figheight(10)
     matplotlib.pyplot.show()
 
-
-# showAllSepiaConversions(PATH)

@@ -1,5 +1,4 @@
 from matplotlib.pyplot import imshow
-import matplotlib
 from lab3.gray_sepia import *
 import numpy as np
 
@@ -44,7 +43,6 @@ class Histogram:
         matplotlib.pyplot.ylabel("Number of pixels")
         histogramB, binEdgesB = np.histogram(bLayer, bins=256, range=(0, 256))
         matplotlib.pyplot.plot(binEdgesB[0: -1], histogramB, color="blue")
-
         matplotlib.pyplot.show()
 
     def plotRGBInOne(self) -> None:
@@ -74,7 +72,6 @@ class Histogram:
     """
     metoda zwracajaca histogram skumulowany na podstawie stanu wewnetrznego obiektu
     """
-    # Na float32 ?
     # TYLKO DLA OBRAZU W SKALI SZAROSCI !
     def alignImage(self) -> 'Histogram':
 
@@ -134,64 +131,6 @@ class ImageComparison(BaseImage):
         print("Coefficient of Determination {method} = {result}".format(method=method.name.upper(),
                                                                         result=sumHistogram))
         return sumHistogram
-
-
-lenaGray = GrayScaleTransform(PATH, colorModel=ColorModel.rgb)
-lenaGray.fromRgbToGray()
-lenaGrayArray = lenaGray.getArray()
-imshow(lenaGray.pixels, cmap='gray')
-matplotlib.pyplot.show()
-lenaGrayHistogram = Histogram(lenaGrayArray)
-lenaGrayHistogram.plot()
-#
-# lenaArray = imread('C://Users/kompp3/Desktop/lena.jpg')
-# imshow(lenaArray)
-# matplotlib.pyplot.show()
-# lenaHistogram = Histogram(lenaArray)
-# lenaHistogram.plot()
-# POROWNYWNAC OBRAZY W SKALI SZAROSCI
-# lenaComparison1 = ImageComparison('C://Users/kompp3/Desktop/lena.jpg', colorModel=ColorModel.rgb)
-# lenaComparison2 = ImageComparison('C://Users/kompp3/Desktop/xdxdxd.jpg', colorModel=ColorModel.rgb)
-#
-# rmse = lenaComparison1.compareTo(lenaComparison2, ImageDiffMethod.rmse)
-# mse = lenaComparison1.compareTo(lenaComparison2, ImageDiffMethod.mse)
-#
-# figure, axis = matplotlib.pyplot.subplots(1, 2)
-# axis[0].imshow(lenaComparison1.pixels)
-# axis[0].set_title("LENA JPG")
-# axis[1].imshow(lenaComparison2.pixels)
-# axis[1].set_title("LENA JPG PO ZMIANIE")
-# figure.set_figwidth(14)
-# figure.set_figheight(14)
-# matplotlib.pyplot.xlabel("RMSE = {rmse}  |  MSE = {mse}".format(rmse=rmse, mse=mse))
-# matplotlib.pyplot.show()
-#
-# lenaComparison3 = ImageComparison('C://Users/kompp3/Desktop/lena.jpg', colorModel=ColorModel.rgb)
-# lenaComparison4 = Image('C://Users/kompp3/Desktop/lena.jpg', colorModel=ColorModel.rgb)
-#
-# rmse = lenaComparison3.compareTo(lenaComparison4, ImageDiffMethod.rmse)
-# mse = lenaComparison3.compareTo(lenaComparison4, ImageDiffMethod.mse)
-
-# figure, axis = matplotlib.pyplot.subplots(1, 2)
-# axis[0].imshow(lenaComparison3.pixels)
-# axis[0].set_title("LENA JPG")
-# axis[1].imshow(lenaComparison4.pixels)
-# axis[1].set_title("LENA JPG 2")
-# figure.set_figwidth(14)
-# figure.set_figheight(14)
-# matplotlib.pyplot.xlabel("RMSE = {rmse}  |  MSE = {mse}".format(rmse=rmse, mse=mse))
-# matplotlib.pyplot.show()
-#
-
-lenaGrayAligned = Histogram(lenaGrayArray)
-lenaGrayAligned.alignImage()
-lenaGrayAligned.plot()
-
-# lenaGrayAlignedArray = lenaGrayAligned.
-imshow(lenaGrayAligned.alignImage().values)
-matplotlib.pyplot.show()
-
-print(lenaGrayHistogram.values - lenaGrayArray)
 
 # TODO - poprawic takze histogram w skali szarosci ( a moze cala skale szarosci ? )
 
