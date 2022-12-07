@@ -20,6 +20,7 @@ class GrayScaleTransform(BaseImage):
         averageB = B * 0.114
 
         self.pixels = averageR + averageG + averageB
+        print(self.pixels)
         self.colorModel = ColorModel.gray
         return self
 
@@ -90,11 +91,11 @@ class GrayScaleTransform(BaseImage):
         matplotlib.pyplot.show()
 
 
-# # --------------------- GRAY ----------------------
-image1 = GrayScaleTransform('C:/Users/kompp3/Desktop/lena.jpg', ColorModel.rgb)
-image1.showGrayConversions()
-
-# # --------------------- SEPIA ----------------------
+# # # # --------------------- GRAY ----------------------
+# image1 = GrayScaleTransform('C:/Users/kompp3/Desktop/lena.jpg', ColorModel.rgb)
+# image1.showGrayConversions()
+# #
+# # # # --------------------- SEPIA ----------------------
 
 alpha1 = 1.1
 alpha2 = 1.5
@@ -108,23 +109,23 @@ w1 = 20
 w2 = 30
 w3 = 40
 
-image3 = GrayScaleTransform(PATH, ColorModel.rgb)
-image3.showSepiaConversions((alpha1, beta1))
-
-image4 = GrayScaleTransform(PATH, ColorModel.rgb)
-image4.showSepiaConversions((alpha2, beta2))
-
-image5 = GrayScaleTransform(PATH, ColorModel.rgb)
-image5.showSepiaConversions((alpha3, beta3))
-
-image5 = GrayScaleTransform(PATH, ColorModel.rgb)
-image5.showSepiaConversions(w=w1)
-
-image5 = GrayScaleTransform(PATH, ColorModel.rgb)
-image5.showSepiaConversions(w=w2)
-
-image5 = GrayScaleTransform(PATH, ColorModel.rgb)
-image5.showSepiaConversions(w=w3)
+# image3 = GrayScaleTransform(PATH, ColorModel.rgb)
+# image3.showSepiaConversions((alpha1, beta1))
+#
+# image4 = GrayScaleTransform(PATH, ColorModel.rgb)
+# image4.showSepiaConversions((alpha2, beta2))
+#
+# image5 = GrayScaleTransform(PATH, ColorModel.rgb)
+# image5.showSepiaConversions((alpha3, beta3))
+#
+# image5 = GrayScaleTransform(PATH, ColorModel.rgb)
+# image5.showSepiaConversions(w=w1)
+#
+# image5 = GrayScaleTransform(PATH, ColorModel.rgb)
+# image5.showSepiaConversions(w=w2)
+#
+# image5 = GrayScaleTransform(PATH, ColorModel.rgb)
+# image5.showSepiaConversions(w=w3)
 
 
 # --------------------------- ALL CONVERSIONS -----------------------------
@@ -166,4 +167,4 @@ def showAllSepiaConversions(path: str = None):
     matplotlib.pyplot.show()
 
 
-showAllSepiaConversions(PATH)
+# showAllSepiaConversions(PATH)

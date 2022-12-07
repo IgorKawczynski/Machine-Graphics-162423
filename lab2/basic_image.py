@@ -343,14 +343,14 @@ class BaseImage:
             raise TypeError("This method is only eligible to HSV, HSI, HSL schema colors!")
 
 
-# # # --------------------- HSV ----------------------
-image1 = BaseImage(PATH, ColorModel.rgb)
-image1.showHsvConversions()
-
-# # # --------------------- HSI ----------------------
-image2 = BaseImage(PATH, ColorModel.rgb)
-image2.showHsiConversions()
-
-# # # --------------------- HSL ----------------------
-image3 = BaseImage(PATH, ColorModel.rgb)
-image3.showHslConversions()
+# # # # --------------------- HSV ----------------------
+# image1 = BaseImage(PATH, ColorModel.rgb)
+# image1.showHsvConversions()
+#
+# # # # --------------------- HSI ----------------------
+# image2 = BaseImage(PATH, ColorModel.rgb)
+# image2.showHsiConversions()
+#
+# # # # --------------------- HSL ----------------------
+# image3 = BaseImage(PATH, ColorModel.rgb)
+# image3.showHslConversions()

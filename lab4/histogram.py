@@ -1,4 +1,5 @@
 from matplotlib.pyplot import imshow
+import matplotlib
 from lab3.gray_sepia import *
 import numpy as np
 
@@ -57,15 +58,39 @@ class Histogram:
             matplotlib.pyplot.plot(binEdges[0: -1], histogram, color=color, label=color + " layer")
             matplotlib.pyplot.legend()
         matplotlib.pyplot.show()
+        print(self.values)
 
     def plotGrayScale(self) -> None:
         matplotlib.pyplot.title("Gray Scale Histogram")
         matplotlib.pyplot.xlim([0, 256])
         matplotlib.pyplot.xlabel("Gray Scale Layer saturation")
         matplotlib.pyplot.ylabel("Number of pixels")
+        matplotlib.pyplot.ylim([0, 3000])
         histogramG, binEdgesG = np.histogram(self.values, bins=256, range=(0, 256))
         matplotlib.pyplot.plot(binEdgesG[0: -1], histogramG, color="gray")
         matplotlib.pyplot.show()
+        print(self.values)
+
+    """
+    metoda zwracajaca histogram skumulowany na podstawie stanu wewnetrznego obiektu
+    """
+    # Na float32 ?
+    # TYLKO DLA OBRAZU W SKALI SZAROSCI !
+    def alignImage(self) -> 'Histogram':
+
+        self.values = np.where(self.values >= 0.0,
+                               (self.values - np.min(self.values)) * (255 / (np.max(self.values) - np.min(self.values))),
+                             0.0)
+
+        self.values = np.where(self.values > 255, 255, self.values)
+
+        return self
+
+    def to_cumulated(self) -> 'Histogram':
+        """
+        metoda zwracajaca histogram skumulowany na podstawie stanu wewnetrznego obiektu
+        """
+        pass
 
 
 class ImageDiffMethod(Enum):
@@ -97,35 +122,95 @@ class ImageComparison(BaseImage):
         grayImage1HistogramValues = Histogram(grayImage1.pixels).values
         grayImage2HistogramValues = Histogram(grayImage2.pixels).values
 
-        n = len(grayImage1HistogramValues)
+        # TODO --> do zmiany
+        n = int(len(grayImage1HistogramValues) / 2)
         sumHistogram = 0
         for x in range(n):
             sumHistogram = sumHistogram + ((grayImage1HistogramValues[x] - grayImage2HistogramValues[x]) ** 2)
-        sumHistogram = np.sum(sumHistogram)
+        sumHistogram = np.sum(sumHistogram) * 1/n
 
         if method == ImageDiffMethod.rmse:
             sumHistogram = np.sqrt(sumHistogram)
-        print("Coefficient of Determination {method} = {result}".format(method=method, result=sumHistogram))
+        print("Coefficient of Determination {method} = {result}".format(method=method.name.upper(),
+                                                                        result=sumHistogram))
         return sumHistogram
 
 
 lenaGray = GrayScaleTransform(PATH, colorModel=ColorModel.rgb)
 lenaGray.fromRgbToGray()
 lenaGrayArray = lenaGray.getArray()
+imshow(lenaGray.pixels, cmap='gray')
+matplotlib.pyplot.show()
 lenaGrayHistogram = Histogram(lenaGrayArray)
 lenaGrayHistogram.plot()
+#
+# lenaArray = imread('C://Users/kompp3/Desktop/lena.jpg')
+# imshow(lenaArray)
+# matplotlib.pyplot.show()
+# lenaHistogram = Histogram(lenaArray)
+# lenaHistogram.plot()
+# POROWNYWNAC OBRAZY W SKALI SZAROSCI
+# lenaComparison1 = ImageComparison('C://Users/kompp3/Desktop/lena.jpg', colorModel=ColorModel.rgb)
+# lenaComparison2 = ImageComparison('C://Users/kompp3/Desktop/xdxdxd.jpg', colorModel=ColorModel.rgb)
+#
+# rmse = lenaComparison1.compareTo(lenaComparison2, ImageDiffMethod.rmse)
+# mse = lenaComparison1.compareTo(lenaComparison2, ImageDiffMethod.mse)
+#
+# figure, axis = matplotlib.pyplot.subplots(1, 2)
+# axis[0].imshow(lenaComparison1.pixels)
+# axis[0].set_title("LENA JPG")
+# axis[1].imshow(lenaComparison2.pixels)
+# axis[1].set_title("LENA JPG PO ZMIANIE")
+# figure.set_figwidth(14)
+# figure.set_figheight(14)
+# matplotlib.pyplot.xlabel("RMSE = {rmse}  |  MSE = {mse}".format(rmse=rmse, mse=mse))
+# matplotlib.pyplot.show()
+#
+# lenaComparison3 = ImageComparison('C://Users/kompp3/Desktop/lena.jpg', colorModel=ColorModel.rgb)
+# lenaComparison4 = Image('C://Users/kompp3/Desktop/lena.jpg', colorModel=ColorModel.rgb)
+#
+# rmse = lenaComparison3.compareTo(lenaComparison4, ImageDiffMethod.rmse)
+# mse = lenaComparison3.compareTo(lenaComparison4, ImageDiffMethod.mse)
 
-lenaArray = imread(PATH)
-lenaHistogram = Histogram(lenaArray)
-lenaHistogram.plot()
+# figure, axis = matplotlib.pyplot.subplots(1, 2)
+# axis[0].imshow(lenaComparison3.pixels)
+# axis[0].set_title("LENA JPG")
+# axis[1].imshow(lenaComparison4.pixels)
+# axis[1].set_title("LENA JPG 2")
+# figure.set_figwidth(14)
+# figure.set_figheight(14)
+# matplotlib.pyplot.xlabel("RMSE = {rmse}  |  MSE = {mse}".format(rmse=rmse, mse=mse))
+# matplotlib.pyplot.show()
+#
 
-lenaComparison1 = ImageComparison(PATH, colorModel=ColorModel.rgb)
-lenaComparison2 = Image('C://Users/kompp3/Desktop/lena2.jpg', colorModel=ColorModel.rgb)
+lenaGrayAligned = Histogram(lenaGrayArray)
+lenaGrayAligned.alignImage()
+lenaGrayAligned.plot()
 
-lenaComparison1.showImg()
-lenaComparison2.showImg()
+# lenaGrayAlignedArray = lenaGrayAligned.
+imshow(lenaGrayAligned.alignImage().values)
+matplotlib.pyplot.show()
 
-rmse = lenaComparison1.compareTo(lenaComparison2, ImageDiffMethod.rmse)
-mse = lenaComparison1.compareTo(lenaComparison2, ImageDiffMethod.mse)
+print(lenaGrayHistogram.values - lenaGrayArray)
 
+# TODO - poprawic takze histogram w skali szarosci ( a moze cala skale szarosci ? )
 
+# TODO wyznaczamy sobie min i max wartosc pixela wystepujacego na CAAALYM obrazie w SKALI szerosci,
+#  f to jest caly obraz, dokonujemy pozniej transformacji takiej jaka jest na wzorze, i we wzorze mamy tak :
+#  dla kazdego pixela odejmuje minimalna wartosc piksela na obrazie i mnozymy przez 255 i dzielimy przez max(f) i min(f)
+
+# Przykladowy tensor dla obrazu :
+# 240 50 30
+# 110 180 35
+# 10 25 64
+#
+# min = 10
+# max = 240
+# dla pierwszej wartosci zrobmy sobie wlasnie wyrównanie (wyrównanie histogramu to wyrownanie wszystkich pikseli w obrazie w skali szarosci)
+# f(1, 1) = (f(1, 1) - min) * ( 255 / (max - min) )
+# tensor po wyrownaniu histogramu :
+# 255 x x    <--- dla x'ow analogicznie robimy jak dla 240...
+# x x x
+# x x x
+
+# Mozna tez to zrobic dla obrazu kolorowego, wtedy robimy to powyzej dla kazdej z 3 warstw...
