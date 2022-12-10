@@ -3,7 +3,7 @@ import numpy as np
 from matplotlib.pyplot import imshow
 
 from lab2.basic_image import BaseImage, ColorModel
-from lab3.gray_sepia import GrayScaleTransform
+from lab4.histogram import Histogram
 
 
 class ImageAligning(BaseImage):
@@ -31,10 +31,29 @@ class ImageAligning(BaseImage):
                 alignedLayers = np.dstack((firstLayer, secondLayer, thirdLayer))
                 return BaseImage(alignedLayers, ColorModel.rgb)
         else:
-            pass
+            if self.pixels.ndim == 2:
+                cumulativeValues = Histogram(self.pixels).toCumulative().values
+                cumulativeRange = cumulativeValues[-1]
+                min = 0
+                max = 0
+                cumulativeSum = 0
+                for x in cumulativeValues:
+                    if cumulativeSum <= 0.05 * cumulativeRange:
+                        min = min + 1
+                    if cumulativeSum <= 0.95 * cumulativeRange:
+                        max = max + 1
+                cumulativeSum = x
+                layerCopy = np.float64(np.copy(self.pixels))
+                alignment = 255 / (max - min)
+                layerReturned = ((layerCopy - min) * alignment).astype('i')
+                layerReturned[layerReturned > 255] = 255
+                layerReturned[layerReturned < 0] = 0
+                return BaseImage(layerReturned, ColorModel.gray)
+            # TODO dla 3D
+            else:
+                pass
 
     def compareStandardToAligned(self, tailElimination: bool = True):
-
         if self.pixels.ndim == 2:
             figure, axis = matplotlib.pyplot.subplots(1, 2)
             axis[0].imshow(self.pixels, cmap='gray')

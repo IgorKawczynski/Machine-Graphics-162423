@@ -15,12 +15,13 @@ class GrayScaleTransform(BaseImage):
     def fromRgbToGray(self) -> BaseImage:
         R, G, B = self.getLayers()
 
-        averageR = R * 0.299
-        averageG = G * 0.587
-        averageB = B * 0.114
+        averageR = np.multiply(R, 0.299)
+        averageG = np.multiply(G, 0.587)
+        averageB = np.multiply(B, 0.114)
 
-        self.pixels = averageR + averageG + averageB
-        print(self.pixels)
+        # self.pixels = np.add(averageR, averageG, averageB)
+        # self.pixels = self.pixels.astype('uint8')
+        self.pixels = np.round((averageR + averageG + averageB)).astype('i')
         self.colorModel = ColorModel.gray
         return self
 

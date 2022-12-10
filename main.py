@@ -9,6 +9,7 @@ import matplotlib
 import numpy as np
 from matplotlib.pyplot import imshow
 
+# # ----------------------------- LAB 1 -----------------------------
 # # img_arr = imread(PATH)
 # img_arr = imread(PATH)
 #
@@ -20,7 +21,6 @@ from matplotlib.pyplot import imshow
 #
 # imsave('image.jpg', img_arr)
 #
-# # ----------------------------------------------------------
 # # mozna rozbic obraz na wszystkie warstwy R G B
 # r_layer, g_layer, b_layer = np.squeeze(np.dsplit(img_arr, img_arr.shape[-1]))
 # img_stacked_layers = np.dstack((r_layer, g_layer, b_layer))
@@ -44,8 +44,8 @@ from matplotlib.pyplot import imshow
 # matplotlib.pyplot.show()
 
 
-# # # -------------------------------------------------- Konwersja ---------------------------------------------------
-
+# # # # -------------------------------------------------- Konwersja ---------------------------------------------------
+#
 # # # # --------------------- HSV ----------------------
 # image1 = BaseImage(PATH, ColorModel.rgb)
 # image1.showHsvConversions()
@@ -59,7 +59,7 @@ from matplotlib.pyplot import imshow
 # image3.showHslConversions()
 
 
-# # # ------------------------------------------------ Skala Szarości -------------------------------------------------
+# # # # ------------------------------------------------ Skala Szarości -------------------------------------------------
 # image1 = GrayScaleTransform('C:/Users/kompp3/Desktop/lena.jpg', ColorModel.rgb)
 # image1.showGrayConversions()
 #
@@ -97,7 +97,12 @@ from matplotlib.pyplot import imshow
 
 
 # # # --------------------------------------------- Histogram i Comparison----------------------------------------------
-# HISTOGRAM
+# # HISTOGRAM
+# lena = BaseImage(PATH, ColorModel.rgb)
+# lena.showImg()
+# lenaRGBHistogram = Histogram(lena.pixels)
+# lenaRGBHistogram.plotRGBInOne()
+#
 # lenaGray = GrayScaleTransform(PATH, colorModel=ColorModel.rgb)
 # lenaGray.fromRgbToGray()
 # lenaGrayArray = lenaGray.getArray()
@@ -106,7 +111,7 @@ from matplotlib.pyplot import imshow
 # lenaGrayHistogram = Histogram(lenaGrayArray)
 # lenaGrayHistogram.plot()
 
-# RMSE I MSE - W SKALI SZAROŚCI
+# # RMSE I MSE - W SKALI SZAROŚCI
 # lenaComparison1 = ImageComparison('C://Users/kompp3/Desktop/lena.jpg', colorModel=ColorModel.rgb)
 # lenaComparison2 = ImageComparison('C://Users/kompp3/Desktop/xdxdxd.jpg', colorModel=ColorModel.rgb)
 #
@@ -128,7 +133,7 @@ from matplotlib.pyplot import imshow
 #
 # rmse = lenaComparison3.compareTo(lenaComparison4, ImageDiffMethod.rmse)
 # mse = lenaComparison3.compareTo(lenaComparison4, ImageDiffMethod.mse)
-
+#
 # figure, axis = matplotlib.pyplot.subplots(1, 2)
 # axis[0].imshow(lenaComparison3.pixels)
 # axis[0].set_title("LENA JPG")
@@ -139,9 +144,9 @@ from matplotlib.pyplot import imshow
 # matplotlib.pyplot.xlabel("RMSE = {rmse}  |  MSE = {mse}".format(rmse=rmse, mse=mse))
 # matplotlib.pyplot.show()
 
-# # # --------------------------------------------- Image Aligning----------------------------------------------
+# # # # --------------------------------------------- Image Aligning----------------------------------------------
 # ALIGN DLA RGB
-lena = BaseImage(PATH2, colorModel=ColorModel.rgb)
+lena = BaseImage(PATH, colorModel=ColorModel.rgb)
 imshow(lena.pixels)
 matplotlib.pyplot.show()
 
@@ -158,24 +163,25 @@ lenaHistogram.plot()
 lenaAlignedHistogram = Histogram(ImageAligning(lena).alignImage(tailElimination=False).pixels)
 lenaAlignedHistogram.plot()
 
-# # ALIGN DLA Skali szarości - do poprawy
-# lenaGray = GrayScaleTransform(PATH, colorModel=ColorModel.rgb)
-# lenaGray.fromRgbToGray()
-# imshow(lenaGray.pixels, cmap='gray')
-# matplotlib.pyplot.show()
-#
-# lenaGrayAlign = ImageAligning(lenaGray).alignImage(tailElimination=False)
-# imshow(lenaGrayAlign.pixels, cmap='gray')
-# matplotlib.pyplot.show()
-#
-# imageGray = ImageAligning(lenaGray)
-# imageGray.compareStandardToAligned(tailElimination=False)
-#
-# lenaGrayHistogram = Histogram(lenaGray.pixels)
-# lenaGrayHistogram.plot()
-#
-# lenaAlignedHistogram = Histogram(lenaGrayAlign.pixels)
-# lenaAlignedHistogram.plot()
+
+# # ALIGN + CUMULATIVE DLA Skali szarości
+lenaGray = GrayScaleTransform(PATH, colorModel=ColorModel.rgb)
+lenaGray.fromRgbToGray()
+
+lenaGrayAlign = ImageAligning(lenaGray).alignImage(tailElimination=False)
+
+imageGray = ImageAligning(lenaGray)
+imageGray.compareStandardToAligned(tailElimination=False)
+
+
+lenaGrayHistogram = Histogram(lenaGray.pixels)
+lenaGrayHistogram.plot()
+
+lenaGrayHistogramCumulative = Histogram(lenaGray.pixels).toCumulative()
+lenaGrayHistogramCumulative.plotCumulative()
+
+lenaAlignedHistogram = Histogram(lenaGrayAlign.pixels)
+lenaAlignedHistogram.plot()
 
 
 

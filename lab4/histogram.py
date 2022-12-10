@@ -7,43 +7,50 @@ class Histogram:
     values: np.ndarray  # przechowuje wartosci histogramu danego obrazu
 
     def __init__(self, values: np.ndarray) -> None:
-        self.values = values
-
-    """
-    metoda wyswietlajaca histogram na podstawie atrybutu values
-    """
-    def plot(self) -> None:
-        if self.values.ndim == 2:
-            self.plotGrayScale()
+        if values.ndim == 2:
+            self.values = np.histogram(values, bins=256, range=(0, 255))[0]
         else:
-            self.plotRGBInOne()
+            firstLayer = values[:, :, 0]
+            secondLayer = values[:, :, 1]
+            thirdLayer = values[:, :, 2]
+            firstLayerHistogram = np.histogram(firstLayer, bins=256, range=(0, 255))[0]
+            secondLayerHistogram = np.histogram(secondLayer, bins=256, range=(0, 255))[0]
+            thirdLayerHistogram = np.histogram(thirdLayer, bins=256, range=(0, 255))[0]
+            self.values = np.dstack((firstLayerHistogram, secondLayerHistogram, thirdLayerHistogram))
+        # DLA METODY plotRGBInOne()  :
+        # else:
+        #     self.values = values
 
-    def plotRGB(self) -> None:
-        rLayer, gLayer, bLayer = np.squeeze(np.dsplit(self.values, self.values.shape[-1]))
-        matplotlib.pyplot.figure()
-        matplotlib.pyplot.title("RED LAYER")
-        matplotlib.pyplot.xlim([0, 256])
-        matplotlib.pyplot.xlabel("Layer saturation")
-        matplotlib.pyplot.ylabel("Number of pixels")
-        histogramR, binEdgesR = np.histogram(rLayer, bins=256, range=(0, 256))
-        matplotlib.pyplot.plot(binEdgesR[0: -1], histogramR, color="red")
-
-        matplotlib.pyplot.figure()
-        matplotlib.pyplot.title("GREEN LAYER")
-        matplotlib.pyplot.xlim([0, 256])
-        matplotlib.pyplot.xlabel("Layer saturation")
-        matplotlib.pyplot.ylabel("Number of pixels")
-        histogramG, binEdgesG = np.histogram(gLayer, bins=256, range=(0, 256))
-        matplotlib.pyplot.plot(binEdgesG[0: -1], histogramG, color="green")
-
-        matplotlib.pyplot.figure()
-        matplotlib.pyplot.title("BLUE LAYER")
-        matplotlib.pyplot.xlim([0, 256])
-        matplotlib.pyplot.xlabel("Layer saturation")
-        matplotlib.pyplot.ylabel("Number of pixels")
-        histogramB, binEdgesB = np.histogram(bLayer, bins=256, range=(0, 256))
-        matplotlib.pyplot.plot(binEdgesB[0: -1], histogramB, color="blue")
-        matplotlib.pyplot.show()
+    def plot(self) -> None:
+        if self.values.ndim == 1:
+            matplotlib.pyplot.figure()
+            matplotlib.pyplot.title("Gray Scale Histogram")
+            matplotlib.pyplot.xlabel("Gray Scale value")
+            matplotlib.pyplot.ylabel("Number of pixels")
+            matplotlib.pyplot.xlim([0, 255])
+            bin_edges = np.linspace(0, 254.9, 256)
+            matplotlib.pyplot.plot(bin_edges, self.values, color="gray")
+            matplotlib.pyplot.show()
+        else:
+            matplotlib.pyplot.figure(figsize=(14, 8))
+            bin_edges = np.linspace(0, 254.9, 256)
+            matplotlib.pyplot.subplot(131)
+            matplotlib.pyplot.title("red layer")
+            matplotlib.pyplot.xlim([0, 255])
+            matplotlib.pyplot.ylabel("Number of pixels")
+            matplotlib.pyplot.xlabel("Red Scale value")
+            matplotlib.pyplot.plot(bin_edges, self.values[:, :, 0].flatten(), color="red")
+            matplotlib.pyplot.subplot(132)
+            matplotlib.pyplot.title("green layer")
+            matplotlib.pyplot.xlabel("Green Scale value")
+            matplotlib.pyplot.xlim([0, 255])
+            matplotlib.pyplot.plot(bin_edges, self.values[:, :, 1].flatten(), color="green")
+            matplotlib.pyplot.subplot(133)
+            matplotlib.pyplot.title("blue layer")
+            matplotlib.pyplot.xlabel("Blue Scale value")
+            matplotlib.pyplot.xlim([0, 255])
+            matplotlib.pyplot.plot(bin_edges, self.values[:, :, 2].flatten(), color="blue")
+            matplotlib.pyplot.show()
 
     def plotRGBInOne(self) -> None:
         matplotlib.pyplot.figure()
@@ -57,22 +64,19 @@ class Histogram:
             matplotlib.pyplot.legend()
         matplotlib.pyplot.show()
 
-    def plotGrayScale(self) -> None:
-        matplotlib.pyplot.title("Gray Scale Histogram")
-        matplotlib.pyplot.xlim([0, 256])
-        matplotlib.pyplot.xlabel("Gray Scale Layer saturation")
-        matplotlib.pyplot.ylabel("Number of pixels")
-        matplotlib.pyplot.ylim([0, 3000])
-        histogramG, binEdgesG = np.histogram(self.values, bins=256, range=(0, 256))
-        matplotlib.pyplot.plot(binEdgesG[0: -1], histogramG, color="gray")
-        matplotlib.pyplot.show()
+    def plotCumulative(self) -> None:
+        if self.values.ndim == 1:
+            matplotlib.pyplot.title("Gray Scale Cumulative Histogram")
+            matplotlib.pyplot.xlim([0, 255])
+            binEdgesC = np.linspace(0, 254.9, 256)
+            matplotlib.pyplot.plot(binEdgesC, self.values, color="gray")
+            matplotlib.pyplot.show()
+        else:
+            raise Exception("MUST BE 1 DIMENSIONAL !!!")
 
-    """
-    metoda zwracajaca histogram skumulowany na podstawie stanu wewnetrznego obiektu
-    """
-    def to_cumulated(self) -> 'Histogram':
-
-        pass
+    def toCumulative(self) -> 'Histogram':
+        self.values = np.cumsum(self.values)
+        return self
 
 
 class ImageDiffMethod(Enum):
@@ -99,13 +103,12 @@ class ImageComparison(BaseImage):
     metoda zwracajaca mse lub rmse dla dwoch obrazow
     """
     def compareTo(self, other: Image, method: ImageDiffMethod) -> float:
-        grayImage1 = GrayScaleTransform(self.pixels, colorModel=ColorModel.rgb)
-        grayImage2 = GrayScaleTransform(other.pixels, colorModel=ColorModel.rgb)
+        grayImage1 = GrayScaleTransform(self.pixels, colorModel=ColorModel.rgb).fromRgbToGray()
+        grayImage2 = GrayScaleTransform(other.pixels, colorModel=ColorModel.rgb).fromRgbToGray()
         grayImage1HistogramValues = Histogram(grayImage1.pixels).values
         grayImage2HistogramValues = Histogram(grayImage2.pixels).values
-
-        # TODO --> do zmiany
-        n = int(len(grayImage1HistogramValues) / 2)
+        # TODO --> do zmiany(?)
+        n = len(grayImage1HistogramValues)
         sumHistogram = 0
         for x in range(n):
             sumHistogram = sumHistogram + ((grayImage1HistogramValues[x] - grayImage2HistogramValues[x]) ** 2)
@@ -117,11 +120,6 @@ class ImageComparison(BaseImage):
                                                                         result=sumHistogram))
         return sumHistogram
 
-# TODO - poprawic takze histogram w skali szarosci ( a moze cala skale szarosci ? )
-
-# TODO wyznaczamy sobie min i max wartosc pixela wystepujacego na CAAALYM obrazie w SKALI szerosci,
-#  f to jest caly obraz, dokonujemy pozniej transformacji takiej jaka jest na wzorze, i we wzorze mamy tak :
-#  dla kazdego pixela odejmuje minimalna wartosc piksela na obrazie i mnozymy przez 255 i dzielimy przez max(f) i min(f)
 
 # Przykladowy tensor dla obrazu :
 # 240 50 30
