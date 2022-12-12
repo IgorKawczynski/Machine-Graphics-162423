@@ -146,42 +146,46 @@ from matplotlib.pyplot import imshow
 
 # # # # --------------------------------------------- Image Aligning----------------------------------------------
 # ALIGN DLA RGB
-lena = BaseImage(PATH, colorModel=ColorModel.rgb)
-imshow(lena.pixels)
-matplotlib.pyplot.show()
+image = BaseImage(PATH, colorModel=ColorModel.rgb)
 
-lenaAlign = ImageAligning(lena).alignImage(tailElimination=False)
-imshow(lenaAlign.pixels)
-matplotlib.pyplot.show()
+imageAlignWithoutTailElimination = ImageAligning(image).alignImage(tailElimination=False)
+imageAlignWithTailElimination = ImageAligning(image).alignImage(tailElimination=True)
 
-image = ImageAligning(lena)
-image.compareStandardToAligned(tailElimination=False)
+imageAligned = ImageAligning(image)
+imageAligned.compareStandardToAligned()
 
-lenaHistogram = Histogram(lena.pixels)
-lenaHistogram.plot()
+imageHistogram = Histogram(image.pixels)
+imageHistogram.plotRGBInOne()
 
-lenaAlignedHistogram = Histogram(ImageAligning(lena).alignImage(tailElimination=False).pixels)
-lenaAlignedHistogram.plot()
+imageAlignedWithoutTailEliminationHistogram = Histogram(imageAlignWithoutTailElimination.pixels)
+imageAlignedWithoutTailEliminationHistogram.plotRGBInOne()
+
+imageAlignedWithTailEliminationHistogram = Histogram(imageAlignWithTailElimination.pixels)
+imageAlignedWithTailEliminationHistogram.plotRGBInOne()
 
 
 # # ALIGN + CUMULATIVE DLA Skali szarości
-lenaGray = GrayScaleTransform(PATH, colorModel=ColorModel.rgb)
-lenaGray.fromRgbToGray()
+imageGray = GrayScaleTransform(PATH, colorModel=ColorModel.rgb)
+imageGray.fromRgbToGray()
 
-lenaGrayAlign = ImageAligning(lenaGray).alignImage(tailElimination=False)
-
-imageGray = ImageAligning(lenaGray)
-imageGray.compareStandardToAligned(tailElimination=False)
+imageGrayAlignWithoutTailElimination = ImageAligning(imageGray).alignImage(tailElimination=False)
+imageGrayAlignWithTailElimination = ImageAligning(imageGray).alignImage(tailElimination=True)
 
 
-lenaGrayHistogram = Histogram(lenaGray.pixels)
-lenaGrayHistogram.plot()
+imageGray = ImageAligning(imageGray)
+imageGray.compareStandardToAligned()
 
-lenaGrayHistogramCumulative = Histogram(lenaGray.pixels).toCumulative()
-lenaGrayHistogramCumulative.plotCumulative()
+imageGrayHistogram = Histogram(imageGray.pixels)
+imageGrayHistogram.plot()
 
-lenaAlignedHistogram = Histogram(lenaGrayAlign.pixels)
-lenaAlignedHistogram.plot()
+imageGrayHistogramCumulative = Histogram(imageGray.pixels).toCumulative()
+imageGrayHistogramCumulative.plotCumulative()
+
+imageAlignedHistogram = Histogram(imageGrayAlignWithoutTailElimination.pixels)
+imageAlignedHistogram.plot()
+
+imageAlignedHistogram = Histogram(imageGrayAlignWithTailElimination.pixels)
+imageAlignedHistogram.plot()
 
 
 

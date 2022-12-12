@@ -9,17 +9,17 @@ class Histogram:
     def __init__(self, values: np.ndarray) -> None:
         if values.ndim == 2:
             self.values = np.histogram(values, bins=256, range=(0, 255))[0]
-        else:
-            firstLayer = values[:, :, 0]
-            secondLayer = values[:, :, 1]
-            thirdLayer = values[:, :, 2]
-            firstLayerHistogram = np.histogram(firstLayer, bins=256, range=(0, 255))[0]
-            secondLayerHistogram = np.histogram(secondLayer, bins=256, range=(0, 255))[0]
-            thirdLayerHistogram = np.histogram(thirdLayer, bins=256, range=(0, 255))[0]
-            self.values = np.dstack((firstLayerHistogram, secondLayerHistogram, thirdLayerHistogram))
-        # DLA METODY plotRGBInOne()  :
         # else:
-        #     self.values = values
+        #     firstLayer = values[:, :, 0]
+        #     secondLayer = values[:, :, 1]
+        #     thirdLayer = values[:, :, 2]
+        #     firstLayerHistogram = np.histogram(firstLayer, bins=256, range=(0, 255))[0]
+        #     secondLayerHistogram = np.histogram(secondLayer, bins=256, range=(0, 255))[0]
+        #     thirdLayerHistogram = np.histogram(thirdLayer, bins=256, range=(0, 255))[0]
+        #     self.values = np.dstack((firstLayerHistogram, secondLayerHistogram, thirdLayerHistogram))
+        # DLA METODY plotRGBInOne()  :
+        else:
+            self.values = values
 
     def plot(self) -> None:
         if self.values.ndim == 1:

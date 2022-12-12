@@ -8,6 +8,9 @@ from enum import Enum
 
 PATH = 'C://Users/kompp3/Desktop/lena.jpg'
 PATH2 = 'C://Users/kompp3/Desktop/nieLena.jpg'
+PATH3 = 'C://Users/kompp3/Desktop/rtg1.jpg'
+PATH4 = 'C://Users/kompp3/Desktop/rtg2.jpg'
+PATH5 = 'C://Users/kompp3/Desktop/fundus.jpeg'
 
 # ------------------------------------------------------------------------------------------------------------
 
