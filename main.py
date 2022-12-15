@@ -8,6 +8,7 @@ from lab5.imageAligning import *
 import matplotlib
 import numpy as np
 from matplotlib.pyplot import imshow
+from PIL import Image
 
 # # ----------------------------- LAB 1 -----------------------------
 # # img_arr = imread(PATH)
@@ -144,50 +145,73 @@ from matplotlib.pyplot import imshow
 # matplotlib.pyplot.xlabel("RMSE = {rmse}  |  MSE = {mse}".format(rmse=rmse, mse=mse))
 # matplotlib.pyplot.show()
 
-# # # # --------------------------------------------- Image Aligning----------------------------------------------
-# ALIGN DLA RGB
-image = BaseImage(PATH, colorModel=ColorModel.rgb)
+# # # # # --------------------------------------------- Image Aligning----------------------------------------------
+# # ALIGN DLA RGB
+# image = BaseImage(PATH, colorModel=ColorModel.rgb)
+#
+# imageAlignWithoutTailElimination = ImageAligning(image).alignImage(tailElimination=False)
+# imageAlignWithTailElimination = ImageAligning(image).alignImage(tailElimination=True)
+#
+# imageAligned = ImageAligning(image)
+# imageAligned.compareStandardToAligned()
+#
+# imageHistogram = Histogram(image.pixels)
+# imageHistogram.plotRGBInOne()
+#
+# imageAlignedWithoutTailEliminationHistogram = Histogram(imageAlignWithoutTailElimination.pixels)
+# imageAlignedWithoutTailEliminationHistogram.plotRGBInOne()
+#
+# imageAlignedWithTailEliminationHistogram = Histogram(imageAlignWithTailElimination.pixels)
+# imageAlignedWithTailEliminationHistogram.plotRGBInOne()
+#
+#
+# # # ALIGN + CUMULATIVE DLA Skali szarości
+# imageGray = GrayScaleTransform(PATH, colorModel=ColorModel.rgb)
+# imageGray.fromRgbToGray()
+#
+# imageGrayAlignWithoutTailElimination = ImageAligning(imageGray).alignImage(tailElimination=False)
+# imageGrayAlignWithTailElimination = ImageAligning(imageGray).alignImage(tailElimination=True)
+#
+#
+# imageGray = ImageAligning(imageGray)
+# imageGray.compareStandardToAligned()
+#
+# imageGrayHistogram = Histogram(imageGray.pixels)
+# imageGrayHistogram.plot()
+#
+# imageGrayHistogramCumulative = Histogram(imageGray.pixels).toCumulative()
+# imageGrayHistogramCumulative.plotCumulative()
+#
+# imageAlignedHistogram = Histogram(imageGrayAlignWithoutTailElimination.pixels)
+# imageAlignedHistogram.plot()
+#
+# imageAlignedHistogram = Histogram(imageGrayAlignWithTailElimination.pixels)
+# imageAlignedHistogram.plot()
+#
+# # # # # --------------------------------------------- Image Filtering----------------------------------------------
+# Kernele :
 
-imageAlignWithoutTailElimination = ImageAligning(image).alignImage(tailElimination=False)
-imageAlignWithTailElimination = ImageAligning(image).alignImage(tailElimination=True)
+# FILTRY
+imageToFilter = BaseImage('./lab6/img/lena.jpg', ColorModel.rgb)
+imageToFilter.showImg()
 
-imageAligned = ImageAligning(image)
-imageAligned.compareStandardToAligned()
+filteredTOPImage = ImageFiltering(imageToFilter)
+filteredTOPImage.showFilters()
 
-imageHistogram = Histogram(image.pixels)
-imageHistogram.plotRGBInOne()
+# DETEKCJA KRAWEDZI
+imageToEdgeDetect = BaseImage('./lab6/img/sudoku2.jpg', ColorModel.rgb)
+imageToEdgeDetect.showImg()
 
-imageAlignedWithoutTailEliminationHistogram = Histogram(imageAlignWithoutTailElimination.pixels)
-imageAlignedWithoutTailEliminationHistogram.plotRGBInOne()
+edgeDetectionTOPImage = ImageFiltering(imageToEdgeDetect)
+edgeDetectionTOPImage.showEdgeDetection()
 
-imageAlignedWithTailEliminationHistogram = Histogram(imageAlignWithTailElimination.pixels)
-imageAlignedWithTailEliminationHistogram.plotRGBInOne()
-
-
-# # ALIGN + CUMULATIVE DLA Skali szarości
-imageGray = GrayScaleTransform(PATH, colorModel=ColorModel.rgb)
-imageGray.fromRgbToGray()
-
-imageGrayAlignWithoutTailElimination = ImageAligning(imageGray).alignImage(tailElimination=False)
-imageGrayAlignWithTailElimination = ImageAligning(imageGray).alignImage(tailElimination=True)
-
-
-imageGray = ImageAligning(imageGray)
-imageGray.compareStandardToAligned()
-
-imageGrayHistogram = Histogram(imageGray.pixels)
-imageGrayHistogram.plot()
-
-imageGrayHistogramCumulative = Histogram(imageGray.pixels).toCumulative()
-imageGrayHistogramCumulative.plotCumulative()
-
-imageAlignedHistogram = Histogram(imageGrayAlignWithoutTailElimination.pixels)
-imageAlignedHistogram.plot()
-
-imageAlignedHistogram = Histogram(imageGrayAlignWithTailElimination.pixels)
-imageAlignedHistogram.plot()
-
-
-
-
-
+# PO KOLEI KAZDY KERNEL
+# 1-wersja
+# image = BaseImage('./lab6/img/nieLena.jpg', ColorModel.rgb)
+# filteredImage = ImageFiltering(image)
+# filteredImage.showFiltered2D(sobel45)
+# 2-wersja
+# image = BaseImage('./lab6/img/nieLena.jpg', ColorModel.rgb)
+# filteredImage = ImageFiltering(image)
+# filteredImage.filter(highPassKernel)
+# filteredImage.showImg()
