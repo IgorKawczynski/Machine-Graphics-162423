@@ -4,6 +4,7 @@ from lab3.image import *
 from lab3.gray_sepia import *
 from lab4.histogram import *
 from lab5.imageAligning import *
+from lab7.imageThresholding import Thresholding
 
 import matplotlib
 import numpy as np
@@ -189,21 +190,23 @@ from PIL import Image
 # imageAlignedHistogram.plot()
 #
 # # # # # --------------------------------------------- Image Filtering----------------------------------------------
-# Kernele :
-
-# FILTRY
-imageToFilter = BaseImage('./lab6/img/lena.jpg', ColorModel.rgb)
-imageToFilter.showImg()
-
-filteredTOPImage = ImageFiltering(imageToFilter)
-filteredTOPImage.showFilters()
-
-# DETEKCJA KRAWEDZI
-imageToEdgeDetect = BaseImage('./lab6/img/sudoku2.jpg', ColorModel.rgb)
-imageToEdgeDetect.showImg()
-
-edgeDetectionTOPImage = ImageFiltering(imageToEdgeDetect)
-edgeDetectionTOPImage.showEdgeDetection()
+# # Kernele :
+#
+# # FILTRY
+# from lab7.thresholding import Thresholding
+#
+# imageToFilter = BaseImage('./lab6/img/lena.jpg', ColorModel.rgb)
+# imageToFilter.showImg()
+#
+# filteredTOPImage = ImageFiltering(imageToFilter)
+# filteredTOPImage.showFilters()
+#
+# # DETEKCJA KRAWEDZI
+# imageToEdgeDetect = BaseImage('./lab6/img/sudoku2.jpg', ColorModel.rgb)
+# imageToEdgeDetect.showImg()
+#
+# edgeDetectionTOPImage = ImageFiltering(imageToEdgeDetect)
+# edgeDetectionTOPImage.showEdgeDetection()
 
 # PO KOLEI KAZDY KERNEL
 # 1-wersja
@@ -215,3 +218,25 @@ edgeDetectionTOPImage.showEdgeDetection()
 # filteredImage = ImageFiltering(image)
 # filteredImage.filter(highPassKernel)
 # filteredImage.showImg()
+
+# # # # # -------------------------------------------- Image Thresholding ---------------------------------------------
+# # Przykład samodzielny
+# image = BaseImage(PATH, colorModel=ColorModel.rgb)
+# imageGray = GrayScaleTransform(PATH, colorModel=ColorModel.rgb)
+# imageGray.fromRgbToGray()
+# imageT = Thresholding(image)
+# imageT.threshold(127)
+# imshow(imageT.pixels, cmap='gray')
+# matplotlib.pyplot.show()
+# # Wyświetlenie po kolei lub wszystkich na raz
+# image = BaseImage(PATH, colorModel=ColorModel.rgb)
+# imageT = Thresholding(image)
+# imageT.showThresholded(30)
+# imageT.showThresholded(70)
+# imageT.showThresholded(127)
+# imageT.showThresholded(170)
+# imageT.showThresholded(220)
+image2 = BaseImage(PATH2, colorModel=ColorModel.rgb)
+imageT2 = Thresholding(image2)
+imageT2.showAllThresholded()
+
