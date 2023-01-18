@@ -97,7 +97,7 @@ class Thresholding(BaseImage):
         axis[0, 5].set_title("p = 220")
         p30Histogram = Histogram(p30.pixels)
         p30Histogram.plot()
-        axis[1, 0].p30Histogram.plot()
+        axis[1, 0].p30Histogram.plot()  # INACZEJ
         axis[1, 0].set_title("p = 220")
         figure.set_figwidth(16)
         figure.set_figheight(3)

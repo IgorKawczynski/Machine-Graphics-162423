@@ -12,7 +12,7 @@ from matplotlib.pyplot import imshow
 from PIL import Image
 
 # # ----------------------------- LAB 1 -----------------------------
-# # img_arr = imread(PATH)
+
 # img_arr = imread(PATH)
 #
 # print(type(img_arr))
@@ -49,21 +49,22 @@ from PIL import Image
 # # # # -------------------------------------------------- Konwersja ---------------------------------------------------
 #
 # # # # --------------------- HSV ----------------------
-# image1 = BaseImage(PATH, ColorModel.rgb)
+# image1 = BaseImage(PATH6_500x500_nature, ColorModel.rgb)
 # image1.showHsvConversions()
 #
 # # # # --------------------- HSI ----------------------
-# image2 = BaseImage(PATH, ColorModel.rgb)
+# image2 = BaseImage(PATH6_500x500_nature, ColorModel.rgb)
 # image2.showHsiConversions()
 #
 # # # # --------------------- HSL ----------------------
-# image3 = BaseImage(PATH, ColorModel.rgb)
+# image3 = BaseImage(PATH6_500x500_nature, ColorModel.rgb)
 # image3.showHslConversions()
 
 
 # # # # ------------------------------------------------ Skala Szarości -------------------------------------------------
-# image1 = GrayScaleTransform('C:/Users/kompp3/Desktop/lena.jpg', ColorModel.rgb)
+# image1 = GrayScaleTransform('C:/Users/kompp3/Desktop/natura500_1.jpg', ColorModel.rgb)
 # image1.showGrayConversions()
+# imageBaseImage = BaseImage('C:/Users/kompp3/Desktop/natura500_1.jpg', ColorModel.rgb)
 #
 # alpha1 = 1.1
 # alpha2 = 1.5
@@ -77,25 +78,25 @@ from PIL import Image
 # w2 = 30
 # w3 = 40
 #
-# image3 = GrayScaleTransform(PATH, ColorModel.rgb)
+# image3 = GrayScaleTransform(imageBaseImage.pixels, imageBaseImage.colorModel)
 # image3.showSepiaConversions((alpha1, beta1))
 #
-# image4 = GrayScaleTransform(PATH, ColorModel.rgb)
+# image4 = GrayScaleTransform(PATH6_500x500_nature, ColorModel.rgb)
 # image4.showSepiaConversions((alpha2, beta2))
 #
-# image5 = GrayScaleTransform(PATH, ColorModel.rgb)
+# image5 = GrayScaleTransform(PATH6_500x500_nature, ColorModel.rgb)
 # image5.showSepiaConversions((alpha3, beta3))
 #
-# image5 = GrayScaleTransform(PATH, ColorModel.rgb)
+# image5 = GrayScaleTransform(PATH6_500x500_nature, ColorModel.rgb)
 # image5.showSepiaConversions(w=w1)
 #
-# image5 = GrayScaleTransform(PATH, ColorModel.rgb)
+# image5 = GrayScaleTransform(PATH6_500x500_nature, ColorModel.rgb)
 # image5.showSepiaConversions(w=w2)
 #
-# image5 = GrayScaleTransform(PATH, ColorModel.rgb)
+# image5 = GrayScaleTransform(PATH6_500x500_nature, ColorModel.rgb)
 # image5.showSepiaConversions(w=w3)
 #
-# showAllSepiaConversions(PATH)
+# showAllSepiaConversions(PATH6_500x500_nature)
 
 
 # # # --------------------------------------------- Histogram i Comparison----------------------------------------------
@@ -108,11 +109,12 @@ from PIL import Image
 # lenaGray = GrayScaleTransform(PATH, colorModel=ColorModel.rgb)
 # lenaGray.fromRgbToGray()
 # lenaGrayArray = lenaGray.getArray()
-# imshow(lenaGray.pixels, cmap='gray')
-# matplotlib.pyplot.show()
+# lenaGray.showGrayImg()
+# # imshow(lenaGray.pixels, cmap='gray')  # inny sposob na wyswietlenie graysScale
+# # matplotlib.pyplot.show()
 # lenaGrayHistogram = Histogram(lenaGrayArray)
 # lenaGrayHistogram.plot()
-
+#
 # # RMSE I MSE - W SKALI SZAROŚCI
 # lenaComparison1 = ImageComparison('C://Users/kompp3/Desktop/lena.jpg', colorModel=ColorModel.rgb)
 # lenaComparison2 = ImageComparison('C://Users/kompp3/Desktop/xdxdxd.jpg', colorModel=ColorModel.rgb)
@@ -129,50 +131,30 @@ from PIL import Image
 # figure.set_figheight(14)
 # matplotlib.pyplot.xlabel("RMSE = {rmse}  |  MSE = {mse}".format(rmse=rmse, mse=mse))
 # matplotlib.pyplot.show()
-#
-# lenaComparison3 = ImageComparison('C://Users/kompp3/Desktop/lena.jpg', colorModel=ColorModel.rgb)
-# lenaComparison4 = Image('C://Users/kompp3/Desktop/lena.jpg', colorModel=ColorModel.rgb)
-#
-# rmse = lenaComparison3.compareTo(lenaComparison4, ImageDiffMethod.rmse)
-# mse = lenaComparison3.compareTo(lenaComparison4, ImageDiffMethod.mse)
-#
-# figure, axis = matplotlib.pyplot.subplots(1, 2)
-# axis[0].imshow(lenaComparison3.pixels)
-# axis[0].set_title("LENA JPG")
-# axis[1].imshow(lenaComparison4.pixels)
-# axis[1].set_title("LENA JPG 2")
-# figure.set_figwidth(14)
-# figure.set_figheight(14)
-# matplotlib.pyplot.xlabel("RMSE = {rmse}  |  MSE = {mse}".format(rmse=rmse, mse=mse))
-# matplotlib.pyplot.show()
 
 # # # # # --------------------------------------------- Image Aligning----------------------------------------------
-# # ALIGN DLA RGB
+
+# # # ALIGN DLA RGB
 # image = BaseImage(PATH, colorModel=ColorModel.rgb)
-#
-# imageAlignWithoutTailElimination = ImageAligning(image).alignImage(tailElimination=False)
-# imageAlignWithTailElimination = ImageAligning(image).alignImage(tailElimination=True)
 #
 # imageAligned = ImageAligning(image)
 # imageAligned.compareStandardToAligned()
+# # imageAligned.saveImg('C://Users/kompp3/Desktop/hehe.jpg')
 #
 # imageHistogram = Histogram(image.pixels)
 # imageHistogram.plotRGBInOne()
 #
+# imageAlignWithoutTailElimination = ImageAligning(image).alignImage(tailElimination=False)
 # imageAlignedWithoutTailEliminationHistogram = Histogram(imageAlignWithoutTailElimination.pixels)
 # imageAlignedWithoutTailEliminationHistogram.plotRGBInOne()
 #
+# imageAlignWithTailElimination = ImageAligning(image).alignImage(tailElimination=True)
 # imageAlignedWithTailEliminationHistogram = Histogram(imageAlignWithTailElimination.pixels)
 # imageAlignedWithTailEliminationHistogram.plotRGBInOne()
-#
 #
 # # # ALIGN + CUMULATIVE DLA Skali szarości
 # imageGray = GrayScaleTransform(PATH, colorModel=ColorModel.rgb)
 # imageGray.fromRgbToGray()
-#
-# imageGrayAlignWithoutTailElimination = ImageAligning(imageGray).alignImage(tailElimination=False)
-# imageGrayAlignWithTailElimination = ImageAligning(imageGray).alignImage(tailElimination=True)
-#
 #
 # imageGray = ImageAligning(imageGray)
 # imageGray.compareStandardToAligned()
@@ -183,17 +165,21 @@ from PIL import Image
 # imageGrayHistogramCumulative = Histogram(imageGray.pixels).toCumulative()
 # imageGrayHistogramCumulative.plotCumulative()
 #
+# imageGrayAlignWithoutTailElimination = ImageAligning(imageGray).alignImage(tailElimination=False)
 # imageAlignedHistogram = Histogram(imageGrayAlignWithoutTailElimination.pixels)
 # imageAlignedHistogram.plot()
 #
+# imageGrayAlignWithTailElimination = ImageAligning(imageGray).alignImage(tailElimination=True)
 # imageAlignedHistogram = Histogram(imageGrayAlignWithTailElimination.pixels)
 # imageAlignedHistogram.plot()
-#
+
+
 # # # # # --------------------------------------------- Image Filtering----------------------------------------------
-# # Kernele :
+# # # Kernele W LAB6 SĄ:
+# #
+# # # FILTRY
 #
-# # FILTRY
-# from lab7.thresholding import Thresholding
+# from lab6.imageFiltering import *
 #
 # imageToFilter = BaseImage('./lab6/img/lena.jpg', ColorModel.rgb)
 # imageToFilter.showImg()
@@ -201,26 +187,26 @@ from PIL import Image
 # filteredTOPImage = ImageFiltering(imageToFilter)
 # filteredTOPImage.showFilters()
 #
-# # DETEKCJA KRAWEDZI
+# # # DETEKCJA KRAWEDZI
 # imageToEdgeDetect = BaseImage('./lab6/img/sudoku2.jpg', ColorModel.rgb)
 # imageToEdgeDetect.showImg()
 #
 # edgeDetectionTOPImage = ImageFiltering(imageToEdgeDetect)
 # edgeDetectionTOPImage.showEdgeDetection()
 
-# PO KOLEI KAZDY KERNEL
-# 1-wersja
+# # # PO KOLEI KAZDY KERNEL
+# # # 1-wersja
 # image = BaseImage('./lab6/img/nieLena.jpg', ColorModel.rgb)
 # filteredImage = ImageFiltering(image)
 # filteredImage.showFiltered2D(sobel45)
-# 2-wersja
+# # # 2-wersja
 # image = BaseImage('./lab6/img/nieLena.jpg', ColorModel.rgb)
 # filteredImage = ImageFiltering(image)
 # filteredImage.filter(highPassKernel)
 # filteredImage.showImg()
 
 # # # # # -------------------------------------------- Image Thresholding ---------------------------------------------
-# # Przykład samodzielny
+# # # Przykład pojedynczy
 # image = BaseImage(PATH, colorModel=ColorModel.rgb)
 # imageGray = GrayScaleTransform(PATH, colorModel=ColorModel.rgb)
 # imageGray.fromRgbToGray()
@@ -228,7 +214,7 @@ from PIL import Image
 # imageT.threshold(127)
 # imshow(imageT.pixels, cmap='gray')
 # matplotlib.pyplot.show()
-# # Wyświetlenie po kolei lub wszystkich na raz
+# # # Wyświetlenie po kolei lub wszystkich na raz
 # image = BaseImage(PATH, colorModel=ColorModel.rgb)
 # imageT = Thresholding(image)
 # imageT.showThresholded(30)
@@ -236,7 +222,7 @@ from PIL import Image
 # imageT.showThresholded(127)
 # imageT.showThresholded(170)
 # imageT.showThresholded(220)
-image2 = BaseImage(PATH2, colorModel=ColorModel.rgb)
-imageT2 = Thresholding(image2)
-imageT2.showAllThresholded()
+# image2 = BaseImage(PATH6_500x500_nature, colorModel=ColorModel.rgb)
+# imageT2 = Thresholding(image2)
+# imageT2.showAllThresholded()
 

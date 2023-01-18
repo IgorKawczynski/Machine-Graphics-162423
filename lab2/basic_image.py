@@ -6,11 +6,18 @@ from matplotlib.image import imsave
 import numpy as np
 from enum import Enum
 
+# np.seterr(divide='ignore', invalid='ignore')
+
 PATH = 'C://Users/kompp3/Desktop/lena.jpg'
 PATH2 = 'C://Users/kompp3/Desktop/nieLena.jpg'
 PATH3 = 'C://Users/kompp3/Desktop/rtg1.jpg'
 PATH4 = 'C://Users/kompp3/Desktop/rtg2.jpg'
 PATH5 = 'C://Users/kompp3/Desktop/fundus.jpeg'
+
+PATH6_500x500_nature = 'C://Users/kompp3/Desktop/natura500_1.jpg'
+PATH7_900x500_nature = 'C://Users/kompp3/Desktop/natura900x500.jpg'
+PATH8_1000x1000_nature = 'C://Users/kompp3/Desktop/natura1000.jpg'
+
 
 # ------------------------------------------------------------------------------------------------------------
 
