@@ -21,19 +21,18 @@ class ImageFiltering(BaseImage):
         if kernel.shape[-1] == 1:
             kernel = np.repeat(kernel, self.pixels.shape[-1], axis=-1)
 
-        assert self.pixels.shape[-1] == kernel.shape[-1]
         size_x, size_y = kernel.shape[:2]
+
         width, height = self.pixels.shape[:2]
 
         output_array = np.zeros(((width - size_x + 2 * padding[0]) + 1,
                                  (height - size_y + 2 * padding[1]) + 1,
                                  self.pixels.shape[-1]))
 
-        padded_image = np.pad(self.pixels, [
+        padded_image = np.pad(self.pixels,[
             (padding[0], padding[0]),
             (padding[1], padding[1]),
-            (0, 0)
-        ])
+            (0, 0)])
 
         for x in range(
                 padded_image.shape[0] - size_x + 1):
